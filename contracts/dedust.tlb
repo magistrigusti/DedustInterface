@@ -1,0 +1,39 @@
+// create_vault
+create_vault#21cfe02b query_id:uint64 asset:Asset = InMsgBody;
+
+// Asset class
+native$000 = Asset;
+jetton$0001 workchain_id:int8 address:uint256 = Asset;
+extra_currency$0010 currency_id:int32 = Asset;
+
+//Deposit
+deposit#b544f4a4 sender_addr:MsgAddressInt amount0:Coins amount1:Coins
+                 reserve0:Coins reserve1:Coins liquidity:Coins = ExtOutMsgBody;
+
+// withdraw function
+withdrawal#3aa870a6 sender_addr:MsgAddressInt liquidity:Coins
+                    amount0:Coins amount1:Coins
+                    reserve0:Coins reserve1:Coins = ExtOutMsgBody;
+
+// transfer function
+store_data$0000 index:uint64 collection_address:MsgAddressInt owner_address
+:MgAddressInt content:Cell = SetData;
+
+//send message function
+send_message$0001 {
+  info:CommonMsgInfo
+  init:(Maybe (StateInit))
+  body:Either X ^X
+} = Message X;
+
+message_body$_ {
+  op:uint32
+  query_id:uint64
+  payload:(Maybe ^Cell)
+} = MessageBody;
+
+addr_stb$0 anycast: (Maybe Anycast) wrkchain_id:int8 address:bits256 =
+MsgAddressInt;
+
+send_msg$0010 to_address:MsgAddressInt amount:Coins op:uint32 query_id:uint256
+payload:(Maybe ^Cell)

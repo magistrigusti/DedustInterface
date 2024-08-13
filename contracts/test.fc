@@ -1,0 +1,22 @@
+const int op::withdrawal = 0x3aa870a6;
+
+() send_withdrawal_message(slice sender_addr, int liquidity, int amount 0,
+ int amount1, int recerve0, int reserve1) impure {
+  var msg = begin_cell()
+    .store_uint(0x18, 6)
+    .store_uint(op:withdrawal, 32)
+    .store_slice(sender_addr)
+    .store_coins(liqudity)
+    .store_coins(amount0)
+    .store_coins(amount1)
+    .store_coins(reserve0)
+    .store_coins(reserve1)
+    .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+  .end_cell();
+
+  send_raw_message(msg, 64);
+ }
+
+ () withdreawal(slice in_msg_body) impure {
+  slice sender_addr = in_msg_body~load_msg_addr();
+ }
